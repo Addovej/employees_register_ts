@@ -1,0 +1,22 @@
+.idea/
+.vscode/
+.env
+logs
+media
+
+# deploy
+.gitlab-ci.yml
+.gitmodules
+
+# byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache
+.coverage
+
+# mypy
+src/.mypy_cache/
+
+# C extensions
+*.so

@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+    container_name: employees_register_app
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app
+      - ./pyproject.toml:/app/pyproject.toml
+    depends_on:
+      - postgres
+    ports:
+      - "8070:8070"
+    command: python main.py
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: employees_register_postgres
+    volumes:
+      - employees_register_pgdata:/var/lib/postgresql/data/pgdata
+    environment:
+      - POSTGRES_USER=employees_register
+      - POSTGRES_DB=employees_register
+      - POSTGRES_PASSWORD=pswd123
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+
+volumes:
+  employees_register_pgdata:

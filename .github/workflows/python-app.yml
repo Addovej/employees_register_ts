@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: make build
+        run: cp .env.example .env && make build
 
       - name: Run linters inside the container
         run: docker run employees_register_app isort . && flake8 && mypy .

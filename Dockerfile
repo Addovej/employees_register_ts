@@ -1,3 +1,12 @@
+FROM node:19.3-slim as build
+
+WORKDIR /react-app
+
+COPY src/frontend/package.json .
+RUN yarn install
+COPY src/frontend .
+RUN yarn run build
+
 FROM python:3.10-slim
 
 ENV POETRY_HOME /opt/poetry
@@ -21,3 +30,4 @@ RUN poetry install
 
 WORKDIR /app
 USER app
+COPY --from=build /react-app/build /frontend

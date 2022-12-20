@@ -11,4 +11,6 @@ class Settings(BaseSettings):
     API_ROOT: str = '/api'
     BACKEND_CORS_ORIGINS: Union[list[AnyHttpUrl], str] = ''
 
+    STATIC_PATH: str = '/frontend'
+
     POSTGRES_DSN: str

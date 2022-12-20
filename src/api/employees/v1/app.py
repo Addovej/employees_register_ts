@@ -1,5 +1,6 @@
 from aiohttp.web import Request, Response, RouteTableDef
 from pydantic import ValidationError
+from sqlalchemy.exc import IntegrityError
 
 from api.utils import extract_id
 from conf import settings
@@ -38,7 +39,13 @@ async def create_item(request: Request) -> JsonResponse:
     except ValidationError as e:
         raise ValidationException(text={'detail': e.errors()})
 
-    employee = await Employee.create(**employee_data.dict(exclude={'id'}))
+    try:
+        employee = await Employee.create(**employee_data.dict(exclude={'id'}))
+    except IntegrityError:
+        raise NotFoundException(
+            text={'detail': f'Chief with id={employee_data.chief_id} does not exists'}
+        )
+
     return JsonResponse(text=EmployeeSchema.from_orm(employee))
 
 
@@ -54,9 +61,14 @@ async def update_item(request: Request) -> Response:
     if not employee:
         raise NotFoundException(text={'detail': f'Not found item with id={_id}'})
 
-    return JsonResponse(text=EmployeeSchema.from_orm(
-        await employee.update(employee_data))
-    )
+    try:
+        return JsonResponse(text=EmployeeSchema.from_orm(
+            await employee.update(employee_data))
+        )
+    except IntegrityError:
+        raise NotFoundException(
+            text={'detail': f'Chief with id={employee_data.chief_id} does not exists'}
+        )
 
 
 @router.delete(f'{API_PREFIX}/{{id}}/')

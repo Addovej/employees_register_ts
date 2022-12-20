@@ -15,7 +15,9 @@ Tech requirements:
 python 3.10+, aiohttp 3.8+, postgresql 13+, docker/docker-compose (optional)
 ```
 
-## Tech stack
+![employees_register_ui_demo](employees_register_ui_demo.jpeg)
+
+## Tech stack:
 - python 3.10
 - aiohttp 3.8
 - SqlAlchemy 1.4
@@ -27,11 +29,21 @@ make migrate
 make start
 ```
 
-## Linters
+## Linters:
 ```bash
 make isort
 make flake8
 make mypy
+```
+
+## Tests:
+```bash
+make tests
+```
+
+## All commands with makefile:
+```bash
+make help
 ```
 
 ## After start:

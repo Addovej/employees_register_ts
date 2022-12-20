@@ -35,4 +35,3 @@ mypy:  ## Run mypy
 
 tests:  ## Run tests
 	$(COMPOSE_RUN_APP) /bin/bash -c "cd /app && pytest -c $(pyproject)"
-

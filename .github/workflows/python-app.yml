@@ -15,8 +15,14 @@ jobs:
       - name: Build
         run: cp .env.example .env && make build
 
-      - name: Run linters inside the container
-        run: docker run employees_register_app isort . && flake8 && mypy .
+      - name: Run isort
+        run: make isort
+
+      - name: Run flake8
+        run: make flake8
+
+      - name: Run mypy
+        run: make mypy
 
       - name: Run Tests
         run: make tests
